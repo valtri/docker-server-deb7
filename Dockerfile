@@ -1,4 +1,4 @@
-FROM docker-puppet-deb7
+FROM valtri/docker-puppet-deb7
 MAINTAINER František Dvořák <valtri@civ.zcu.cz>
 
 # ==== puppet ====
