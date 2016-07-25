@@ -10,17 +10,16 @@ RUN sed -e 's/\(\[main\]\)/\1\nserver=myriad7.zcu.cz/' -i /etc/puppet/puppet.con
 RUN echo 'locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8' | debconf-set-selections
 RUN echo 'locales locales/default_environment_locale select en_US.UTF-8' | debconf-set-selections
 RUN apt-get update \
-&& apt-get install -y locales
+&& apt-get install -y locales \
+&& apt-get clean \
+&& rm -rf /var/lib/apt/lists/*
 
 # ==== ssh ====
 
 RUN apt-get update \
 && apt-get install -y openssh-server \
-&& sed -e 's/^#\(GSSAPIAuthentication\).*/\1 yes/' -i /etc/ssh/sshd_config
-
-# ==== cleanup ====
-
-RUN apt-get clean \
+&& sed -e 's/^#\(GSSAPIAuthentication\).*/\1 yes/' -i /etc/ssh/sshd_config \
+&& apt-get clean \
 && rm -rf /var/lib/apt/lists/*
 
 # ==== entry ====
